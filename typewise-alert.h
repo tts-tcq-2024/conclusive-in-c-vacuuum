@@ -12,8 +12,8 @@ typedef enum {
 } BreachType;
 
 BreachType inferBreach(double value, double lowerLimit, double upperLimit);
+void getCoolingLimits(CoolingType coolingType, int &lowerLimit, int &upperLimit);
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC);
-
 typedef enum {
   TO_CONTROLLER,
   TO_EMAIL
@@ -38,4 +38,3 @@ extern bool isEmailAlertCalled;
 
 extern void (*sendToControllerPtr)(BreachType);
 extern void (*sendToEmailPtr)(BreachType);
-
