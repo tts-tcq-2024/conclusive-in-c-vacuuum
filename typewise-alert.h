@@ -1,5 +1,4 @@
 #pragma once
-
 typedef enum {
   PASSIVE_COOLING,
   HI_ACTIVE_COOLING,
@@ -30,3 +29,13 @@ void checkAndAlert(
 
 void sendToController(BreachType breachType);
 void sendToEmail(BreachType breachType);
+
+// Extern declarations for mock variables
+extern BreachType MockControllerBreachType;
+extern BreachType MockEmailBreachType;
+extern bool isControllerAlertCalled;
+extern bool isEmailAlertCalled;
+
+extern void (*sendToControllerPtr)(BreachType);
+extern void (*sendToEmailPtr)(BreachType);
+
