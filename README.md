@@ -49,4 +49,5 @@ During the next four weeks, what improvement do you plan in your code-quality pr
 - Adopt all the good practices I learnt through this training process i.e reducing CCN, duplication in code, making the code more modular, to make the code more readable as we often works in teams and not everyone will be able to understand a piece of code in the same manner.
 - Adopt refactoring design patterns when it comes to modify legacy code. This helps in reducing the time and effort spent in refcatoring tasks.
 - Simple suggestions like following the practice of using meaningful variable and function names and its case can go a long way in making the code more explanatory.
-- Writing test specs and taking the time to go through all the requirements to ensure full requirements and code coverage in the tests and vice versa. 
+- Writing test specs and taking the time to go through all the requirements to ensure full requirements and code coverage in the tests and vice versa.
+- Ensure all the functions in the code are testable and usage of mocks over stubs.
