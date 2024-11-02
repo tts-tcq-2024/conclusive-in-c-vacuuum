@@ -40,21 +40,34 @@ protected:
         std::string output = testing::internal::GetCapturedStdout();
         ASSERT_EQ(expectedBreach, classifyTemperatureBreach(coolingType, temperatureInC));
         if (alertTarget == TO_CONTROLLER) {
-            const unsigned short expectedHeader = 0xfeed;
-            std::string expectedOutput = (expectedBreach == TOO_HIGH) ? "feed : 2\n" : ((expectedBreach == TOO_LOW) ? "feed : 1\n":"feed : 0\n"); // Adjust for normal and low conditions
-            ASSERT_EQ(output, expectedOutput);
+            validateControllerOutput(expectedBreach, output);
         } else if (alertTarget == TO_EMAIL) {
-            const char* recipient = "a.b@c.com";
-            std::string expectedOutput;
-            if (expectedBreach == TOO_LOW) {
-                expectedOutput = "To: a.b@c.com\nHi, the temperature is too low\n";
-            } else if (expectedBreach == TOO_HIGH) {
-                expectedOutput = "To: a.b@c.com\nHi, the temperature is too high\n";
-            } else {
-                expectedOutput = ""; // No output for NORMAL
-            }
-            ASSERT_EQ(output, expectedOutput);
+            validateEmailOutput(expectedBreach, output);
         }
+    }
+
+    void validateControllerOutput(BreachType expectedBreach, const std::string& output) {
+        const unsigned short expectedHeader = 0xfeed;
+        std::string expectedOutput = "";
+        if (expectedBreach == TOO_LOW) {
+            expectedOutput = "feed : 1\n";
+        } else if (expectedBreach == TOO_HIGH) {
+            expectedOutput = "feed : 2\n";
+        }else {
+            expectedOutput = "feed : 0\n";
+        }
+        ASSERT_EQ(output, expectedOutput);
+    }
+
+    void validateEmailOutput(BreachType expectedBreach, const std::string& output) {
+        const char* recipient = "a.b@c.com";
+        std::string expectedOutput = "";
+        if (expectedBreach == TOO_LOW) {
+            expectedOutput = "To: a.b@c.com\nHi, the temperature is too low\n";
+        } else if (expectedBreach == TOO_HIGH) {
+            expectedOutput = "To: a.b@c.com\nHi, the temperature is too high\n";
+        } // No action required for NORMAL; expectedOutput remains empty.
+        ASSERT_EQ(output, expectedOutput);
     }
 };
 // Test Cases
